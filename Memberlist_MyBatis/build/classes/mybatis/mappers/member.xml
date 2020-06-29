@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap type="memberVO" id="memResult">
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="joinDate" column="joinDate"/>
+	</resultMap>
+	
+	<select resultMap="memResult" id="selectAllMemberList">
+		<![CDATA[
+			select * from t_member order by joinDate desc
+		]]>
+	</select>
+	<select id="selectName" resultType="String">
+		<![CDATA[
+			select name from t_member where id='hong'
+		]]>
+	</select>
+	<select resultType="int" id="selectPw">
+		<![CDATA[
+			select pw from t_member where id='hong'
+		]]>
+	</select>
+	<select id="selectMemberById" resultType="memberVO" parameterType="String">
+		<![CDATA[
+			select * from t_member where id=#{id}
+		]]>
+	</select>
+	<select id="selectMemberByPw" resultMap="memResult" parameterType="int">
+		<![CDATA[
+			select * from t_member where pw=#{pw}
+		]]>
+	</select>
+	<select id="insertMember" parameterType="memberVO">
+		<![CDATA[
+			insert into t_member(id, pw, name, email) values(#{id}, #{pw}, #{name}, #{email})
+		]]>
+	</select>
+	<select id="updateMember" parameterType="memberVO">
+		<![CDATA[
+			update t_member set pw=#{pw}, name=#{name}, email=#{email} where id=#{id}
+		]]>
+	</select>
+	<select id="deleteMember" parameterType="String">
+		<![CDATA[
+			delete from t_member where id=#{id}
+		]]>
+	</select>
+</mapper>
